@@ -515,7 +515,7 @@ class QuillRawEditorState extends EditorState
 
     _selectionOverlay?.handlesVisible = _shouldShowSelectionHandles();
 
-    if (!_hasFocus) {
+    if (!_keyboardVisible) {
       // This will show the keyboard for all selection changes on the
       // editor, not just changes triggered by user gestures.
       requestKeyboard();
@@ -1209,14 +1209,12 @@ class QuillRawEditorState extends EditorState
     return true;
   }
 
-  @override
-  void toggleToolbar([bool hideHandles = true]) {
-    final selectionOverlay = _selectionOverlay ??= _createSelectionOverlay();
-    if (selectionOverlay.handlesVisible) {
-      hideToolbar(hideHandles);
-    } else {
-      showToolbar();
-    }
+  void _replaceText(ReplaceTextIntent intent) {
+    userUpdateTextEditingValue(
+      intent.currentTextEditingValue
+          .replaced(intent.replacementRange, intent.replacementText),
+      intent.cause,
+    );
   }
 
   @override
