@@ -295,8 +295,6 @@ class EditorTextSelectionOverlay {
             ? newSelection.extent
             : const TextPosition(offset: 0);
         break;
-      default:
-        throw ArgumentError('Invalid position');
     }
 
     final currSelection = newSelection != null
@@ -403,8 +401,6 @@ class _TextSelectionHandleOverlay extends StatefulWidget {
         return renderObject.selectionStartInViewport;
       case _TextSelectionHandlePosition.end:
         return renderObject.selectionEndInViewport;
-      default:
-        throw ArgumentError('Invalid position');
     }
   }
 }
@@ -491,8 +487,6 @@ class _TextSelectionHandleOverlayState
               isNormalized ? position.offset : widget.selection.extentOffset,
         );
         break;
-      default:
-        throw ArgumentError('Invalid widget.position');
     }
 
     if (newSelection.baseOffset >= newSelection.extentOffset) {
