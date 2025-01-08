@@ -18,11 +18,16 @@ enum _AlignmentOptions {
 class QuillToolbarSelectAlignmentButton extends StatelessWidget {
   const QuillToolbarSelectAlignmentButton(
       {required this.controller, super.key});
+
   final QuillController controller;
 
   @override
   Widget build(BuildContext context) {
     return MenuAnchor(
+      alignmentOffset: Offset(
+        0,
+        -(_AlignmentOptions.values.length + 1) * 50,
+      ),
       menuChildren: _AlignmentOptions.values
           .map(
             (e) => MenuItemButton(

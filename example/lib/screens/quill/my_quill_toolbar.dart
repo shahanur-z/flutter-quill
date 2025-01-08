@@ -7,7 +7,6 @@ import 'package:flutter_quill/extensions.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart'
     show getApplicationDocumentsDirectory;
@@ -30,48 +29,6 @@ class MyQuillToolbar extends StatelessWidget {
     QuillController controller,
     BuildContext context,
   ) async {
-    final croppedFile = await ImageCropper().cropImage(
-      sourcePath: image,
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: 'Cropper',
-          aspectRatioPresets: [
-            CropAspectRatioPreset.square,
-            CropAspectRatioPreset.ratio3x2,
-            CropAspectRatioPreset.original,
-            CropAspectRatioPreset.ratio4x3,
-            CropAspectRatioPreset.ratio16x9
-          ],
-          toolbarColor: Colors.deepOrange,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false,
-        ),
-        IOSUiSettings(
-          title: 'Cropper',
-          aspectRatioPresets: [
-            CropAspectRatioPreset.square,
-            CropAspectRatioPreset.ratio3x2,
-            CropAspectRatioPreset.original,
-            CropAspectRatioPreset.ratio4x3,
-            CropAspectRatioPreset.ratio16x9
-          ],
-        ),
-        WebUiSettings(
-          context: context,
-        ),
-      ],
-    );
-    final newImage = croppedFile?.path;
-    if (newImage == null) {
-      return;
-    }
-    if (kIsWeb) {
-      controller.insertImageBlock(imageSource: newImage);
-      return;
-    }
-    final newSavedImage = await saveImage(io.File(newImage));
-    controller.insertImageBlock(imageSource: newSavedImage);
   }
 
   Future<void> onImageInsert(String image, QuillController controller) async {

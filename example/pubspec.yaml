@@ -35,8 +35,6 @@ dependencies:
   # Json
   json_annotation: ^4.8.1
 
-  # Plugins
-  image_cropper: ^8.0.1
   path_provider: ^2.1.2
   # For drag and drop feature
   # Switch to the pub.dev version after https://github.com/MixinNetwork/flutter-plugins/pull/351

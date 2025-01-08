@@ -89,8 +89,11 @@ class QuillToolbarFontSizeButtonState extends QuillToolbarBaseButtonState<
 
   void _onDropdownButtonPressed() {
     if (_menuController.isOpen) {
+
       _menuController.close();
     } else {
+      FocusScope.of(context).unfocus();
+      FocusScope.of(context).requestFocus(FocusNode());
       _menuController.open();
     }
     afterButtonPressed?.call();
@@ -114,13 +117,16 @@ class QuillToolbarFontSizeButtonState extends QuillToolbarBaseButtonState<
       );
     }
     return MenuAnchor(
+      alignmentOffset: Offset(
+        0,
+        -(rawItemsMap.length + 1) * 50,
+      ),
       controller: _menuController,
       menuChildren: rawItemsMap.entries.map((fontSize) {
         return MenuItemButton(
           key: ValueKey(fontSize.key),
           onPressed: () {
             final newValue = fontSize.value;
-
             final keyName = _getKeyName(newValue);
             setState(() {
               if (keyName != context.loc.clear) {

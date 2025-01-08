@@ -45,6 +45,7 @@ class _QuillToolbarSelectLineHeightStyleDropdownButtonState
   Attribute<dynamic> _selectedItem = Attribute.lineHeight;
 
   final _menuController = MenuController();
+
   @override
   void initState() {
     super.initState();
@@ -136,6 +137,10 @@ class _QuillToolbarSelectLineHeightStyleDropdownButtonState
 
     return MenuAnchor(
         controller: _menuController,
+        alignmentOffset: Offset(
+          0,
+          -(lineHeightAttributes.length + 1) * 50,
+        ),
         menuChildren: lineHeightAttributes
             .map(
               (e) => MenuItemButton(

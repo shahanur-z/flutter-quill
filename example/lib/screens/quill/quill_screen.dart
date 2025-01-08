@@ -121,16 +121,20 @@ class _QuillScreenState extends State<QuillScreen> {
           Builder(
             builder: (context) {
               return Expanded(
-                child: MyQuillEditor(
-                  controller: _controller,
-                  configurations: QuillEditorConfigurations(
-                    searchConfigurations: const QuillSearchConfigurations(
-                      searchEmbedMode: SearchEmbedMode.plainText,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: MyQuillEditor(
+                    controller: _controller,
+                    configurations: QuillEditorConfigurations(
+                      searchConfigurations: const QuillSearchConfigurations(
+                        searchEmbedMode: SearchEmbedMode.plainText,
+                      ),
+                      sharedConfigurations: _sharedConfigurations,
+
                     ),
-                    sharedConfigurations: _sharedConfigurations,
+                    scrollController: _editorScrollController,
+                    focusNode: _editorFocusNode,
                   ),
-                  scrollController: _editorScrollController,
-                  focusNode: _editorFocusNode,
                 ),
               );
             },

@@ -122,6 +122,10 @@ class QuillToolbarFontFamilyButtonState extends QuillToolbarBaseButtonState<
         return Tooltip(message: effectiveTooltip, child: child);
       },
       child: MenuAnchor(
+        alignmentOffset: Offset(
+          0,
+          -(rawItemsMap.length + 1) * 50,
+        ),
         controller: _menuController,
         menuChildren: [
           for (final MapEntry<String, String> fontFamily in rawItemsMap.entries)
