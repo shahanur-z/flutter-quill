@@ -109,6 +109,10 @@ class QuillToolbarFontSizeButtonState extends QuillToolbarBaseButtonState<
       );
     }
     return MenuAnchor(
+      alignmentOffset: Offset(
+        0,
+        -(_items.entries.length + 1) * 50,
+      ),
       controller: _menuController,
       menuChildren: _items.entries.map((fontSize) {
         return MenuItemButton(

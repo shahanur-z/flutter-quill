@@ -142,6 +142,10 @@ class _QuillToolbarSelectHeaderStyleDropdownButtonState
 
     return MenuAnchor(
       controller: _menuController,
+      alignmentOffset: Offset(
+        0,
+        -(headerAttributes.length + 1) * 50,
+      ),
       menuChildren: headerAttributes
           .map(
             (e) => MenuItemButton(

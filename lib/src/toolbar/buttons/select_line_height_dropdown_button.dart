@@ -137,6 +137,10 @@ class _QuillToolbarSelectLineHeightStyleDropdownButtonState
 
     return MenuAnchor(
         controller: _menuController,
+        alignmentOffset: Offset(
+          0,
+          -(lineHeightAttributes.length + 1) * 50,
+        ),
         menuChildren: lineHeightAttributes
             .map(
               (e) => MenuItemButton(
