@@ -13,6 +13,7 @@ enum ClipboardAction { cut, copy, paste }
 
 class ClipboardMonitor {
   bool _canPaste = false;
+
   bool get canPaste => _canPaste;
   Timer? _timer;
 
@@ -36,7 +37,7 @@ class ClipboardMonitor {
 }
 
 class QuillToolbarClipboardButton extends QuillToolbarToggleStyleBaseButton {
-  QuillToolbarClipboardButton({
+  const QuillToolbarClipboardButton({
     required super.controller,
     required this.clipboardAction,
     super.options = const QuillToolbarToggleStyleButtonOptions(),
@@ -49,7 +50,7 @@ class QuillToolbarClipboardButton extends QuillToolbarToggleStyleBaseButton {
 
   final ClipboardAction clipboardAction;
 
-  final ClipboardMonitor _monitor = ClipboardMonitor();
+  //final ClipboardMonitor _monitor = ClipboardMonitor();
 
   @override
   State<StatefulWidget> createState() => QuillToolbarClipboardButtonState();
@@ -66,53 +67,56 @@ class QuillToolbarClipboardButtonState
       case ClipboardAction.copy:
         return !controller.selection.isCollapsed;
       case ClipboardAction.paste:
-        return !controller.readOnly && (kIsWeb || widget._monitor.canPaste);
+        return !controller.readOnly;
+    //return !controller.readOnly && (kIsWeb || widget._monitor.canPaste);
     }
   }
 
-  void _listenClipboardStatus() => didChangeEditingValue();
+  //void _listenClipboardStatus() => didChangeEditingValue();
 
   @override
   void addExtraListener() {
-    if (widget.clipboardAction == ClipboardAction.paste) {
-      widget._monitor.monitorClipboard(true, _listenClipboardStatus);
-    }
+    // if (widget.clipboardAction == ClipboardAction.paste) {
+    //   widget._monitor.monitorClipboard(true, _listenClipboardStatus);
+    // }
   }
 
   @override
   void removeExtraListener(covariant QuillToolbarClipboardButton oldWidget) {
-    if (widget.clipboardAction == ClipboardAction.paste) {
-      oldWidget._monitor.monitorClipboard(false, _listenClipboardStatus);
-    }
+    // if (widget.clipboardAction == ClipboardAction.paste) {
+    //   oldWidget._monitor.monitorClipboard(false, _listenClipboardStatus);
+    // }
   }
 
   @override
   String get defaultTooltip => switch (widget.clipboardAction) {
-        ClipboardAction.cut => context.loc.cut,
-        ClipboardAction.copy => context.loc.copy,
-        ClipboardAction.paste => context.loc.paste,
-      };
+    ClipboardAction.cut => context.loc.cut,
+    ClipboardAction.copy => context.loc.copy,
+    ClipboardAction.paste => context.loc.paste,
+  };
 
   @override
   IconData get defaultIconData => switch (widget.clipboardAction) {
-        ClipboardAction.cut => Icons.cut_outlined,
-        ClipboardAction.copy => Icons.copy_outlined,
-        ClipboardAction.paste => Icons.paste_outlined,
-      };
+    ClipboardAction.cut => Icons.cut_outlined,
+    ClipboardAction.copy => Icons.copy_outlined,
+    ClipboardAction.paste => Icons.paste_outlined,
+  };
 
   void _onPressed() {
-    switch (widget.clipboardAction) {
-      case ClipboardAction.cut:
-        controller.clipboardSelection(false);
-        break;
-      case ClipboardAction.copy:
-        controller.clipboardSelection(true);
-        break;
-      case ClipboardAction.paste:
-        controller.clipboardPaste();
-        break;
+    if(currentValue) {
+      switch (widget.clipboardAction) {
+        case ClipboardAction.cut:
+          controller.clipboardSelection(false);
+          break;
+        case ClipboardAction.copy:
+          controller.clipboardSelection(true);
+          break;
+        case ClipboardAction.paste:
+          controller.clipboardPaste();
+          break;
+      }
+      afterButtonPressed?.call();
     }
-    afterButtonPressed?.call();
   }
 
   @override
@@ -136,9 +140,10 @@ class QuillToolbarClipboardButtonState
           icon: Icon(
             iconData,
             size: iconSize * iconButtonFactor,
+            color: currentStateValue ? null : Colors.grey,
           ),
           isSelected: false,
-          onPressed: currentValue ? _onPressed : null,
+          onPressed: _onPressed,
           afterPressed: afterButtonPressed,
           iconTheme: iconTheme,
         ));
