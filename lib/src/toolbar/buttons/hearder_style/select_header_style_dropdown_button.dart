@@ -49,6 +49,7 @@ class _QuillToolbarSelectHeaderStyleDropdownButtonState
   @override
   void initState() {
     super.initState();
+    _selectedItem = _getHeaderValue();
     widget.controller.addListener(_didChangeEditingValue);
   }
 
