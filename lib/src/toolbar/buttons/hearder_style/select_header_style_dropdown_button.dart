@@ -91,7 +91,7 @@ class _QuillToolbarSelectHeaderStyleDropdownButtonState
     return widget.controller
             .getSelectionStyle()
             .attributes[Attribute.header.key] ??
-        Attribute.header;
+        _selectedItem;
   }
 
   String _label(Attribute<dynamic> value) {
