@@ -46,6 +46,7 @@ class _QuillToolbarSelectHeaderStyleDropdownButtonState
   Attribute<dynamic> _selectedItem = Attribute.header;
 
   final _menuController = MenuController();
+
   @override
   void initState() {
     super.initState();
@@ -88,10 +89,25 @@ class _QuillToolbarSelectHeaderStyleDropdownButtonState
       widget.controller.toolbarButtonToggler.remove(Attribute.header.key);
       return attr;
     }
-    return widget.controller
-            .getSelectionStyle()
-            .attributes[Attribute.header.key] ??
-        Attribute.header;
+    final selectedAttr =
+        widget.controller.getSelectionStyle().attributes[Attribute.header.key];
+    if (selectedAttr == null &&
+        widget.controller.document.toDelta().operations.length == 1 &&
+        (widget.controller.document
+                .toDelta()
+                .operations
+                .first
+                .attributes
+                ?.containsKey(Attribute.header.key) ??
+            false)) {
+      final level = widget.controller.document
+          .toDelta()
+          .operations
+          .first
+          .attributes![Attribute.header.key];
+      return HeaderAttribute(level: level);
+    }
+    return selectedAttr ?? Attribute.header;
   }
 
   String _label(Attribute<dynamic> value) {
